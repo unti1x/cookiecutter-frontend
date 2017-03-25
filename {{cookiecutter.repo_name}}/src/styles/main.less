@@ -1,0 +1,35 @@
+@import "theme";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Titillium+Web');
+
+body {
+  padding: 0;
+  background-color: @background;
+  color: @font-color;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.yell {
+  margin: 5em 10em;
+  padding: 1em;
+  border: 1px solid @border-color;
+  background-color: @box-background;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 2em;
+}
+
+p {
+  line-height: 1.2;
+}
+
+a {
+  color: @link-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

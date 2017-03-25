@@ -1,0 +1,26 @@
+!!! 5
+%html
+  %head
+    %meta{charset: "utf-8"}
+    %meta{name: "keywords", content: ""}
+    %meta{name: "description", content: "{{cookiecutter.description}}"}
+
+    %title {{cookiecutter.project_name}}
+
+    %link{rel: "stylesheet", type: "text/css", href: "/styles/main.css"}
+
+  %body
+    .yell
+      %h1 You are awesome!
+      %p This project template is made of crap and sticks, but still could be fixed.
+
+      %ul
+        %li
+          %a{href: "https://github.com/audreyr/cookiecutter"} Cookiecutter
+          &nbsp;&mdash; you probably know it already
+        %li
+          %a{href: "https://github.com/creationix/haml-js"} haml-js
+          &nbsp;&mdash; server side templating language for JavaScript
+        %li
+          %a{href: "http://coffeescript.org/"} CoffeeScript
+          &nbsp;&mdash; fancy JS preprocessor

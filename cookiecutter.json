@@ -1,0 +1,10 @@
+{
+  "project_name": "HelloWorld",
+  "repo_name": "hello-world",
+  "version": "1.0.0",
+  "style_engine": ["scss", "less"],
+  "template_engine": ["twig", "haml", "pug"],
+  "author": "",
+  "license": "MIT",
+  "description": ""
+}
