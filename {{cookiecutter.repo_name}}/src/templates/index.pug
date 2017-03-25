@@ -5,7 +5,7 @@ html
     meta(name='keywords', content='')
     meta(name='description', content='{{cookiecutter.description}}')
 
-    title HelloWorld
+    title {{cookiecutter.project_name}}
 
     link(rel='stylesheet', type='text/css', href='/styles/main.css')
 
@@ -24,3 +24,4 @@ html
         li
           a(href='http://coffeescript.org/') CoffeeScript
           | &nbsp;&mdash; fancy JS preprocessor
+    script(type='text/javascript', src='/scripts/index.js')
