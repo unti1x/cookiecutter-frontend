@@ -1,6 +1,6 @@
 {
-  "project_name": "HelloWorld",
-  "repo_name": "hello-world",
+  "project_name": "AwesomeProject",
+  "repo_name": "awesome-project",
   "version": "1.0.0",
   "style_engine": ["scss", "less"],
   "template_engine": ["twig", "haml", "pug"],

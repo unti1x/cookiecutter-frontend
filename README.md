@@ -14,6 +14,10 @@ Create Project
 cookiecutter gh:unti1x/cookiecutter-frontend
 ```
 
+## Node.js scripts
+* `npm start` builds everything to `dist` folder and runs dev server
+* `npm run release` builds and minifies everything to `build` folder
+
 ## Tools
 ### Template engines
 * [Twig.js](https://github.com/twigjs/twig.js) (default)

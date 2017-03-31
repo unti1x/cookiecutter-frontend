@@ -1,20 +1,27 @@
 doctype html
 html
   head
-    meta(charset='utf-8')
-    meta(name='keywords', content='')
-    meta(name='description', content='{{cookiecutter.description}}')
+    meta(charset='utf-8')/
+    meta(name='keywords', content='')/
+    meta(name='description', content='{{cookiecutter.description}}')/
 
     title {{cookiecutter.project_name}}
 
-    link(rel='stylesheet', type='text/css', href='/styles/main.css')
+    if debug
+      link(rel='stylesheet', type='text/css', href='styles/main.css')/
+    else
+      link(rel='stylesheet', type='text/css', href='index.min.css')/
 
   body
+    .logo
+    
     .yell
       h1 You are awesome!
       p This project template is made of crap and sticks, but still could be fixed.
-
-      ul
+      p
+        a#links-expander.expander(href="#") Take some links
+        
+      ul#links-list.hidden
         li
           a(href='https://github.com/audreyr/cookiecutter') Cookiecutter
           | &nbsp;&mdash; you probably know it already
@@ -24,4 +31,9 @@ html
         li
           a(href='http://coffeescript.org/') CoffeeScript
           | &nbsp;&mdash; fancy JS preprocessor
-    script(type='text/javascript', src='/scripts/index.js')
+    
+    if debug
+      script(type='text/javascript', src='scripts/index.js')
+    else
+      script(type='text/javascript', src='index.min.js')
+    

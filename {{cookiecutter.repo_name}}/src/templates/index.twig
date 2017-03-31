@@ -7,15 +7,28 @@
 
     <title>{{cookiecutter.project_name|e}}</title>
 
-    <link rel="stylesheet" type="text/css" href="/styles/main.css" />
+    {% raw -%}
+    {% if debug -%}
+      <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    {% else -%}
+      <link rel="stylesheet" type="text/css" href="index.min.css" />
+    {% endif %}
+    {%- endraw %}
+
   </head>
   <body>
+    <div class="logo"></div>
     <div class="yell">
       <h1>You are awesome!</h1>
       <p>
         This project template is made of crap and sticks, but still could be fixed.
       </p>
-      <ul>
+      <p>
+        <a href="#" id="links-expander" class="expander">
+          Take some links
+        </a>
+      </p>
+      <ul id="links-list" class="hidden">
         <li>
           <a href="https://github.com/audreyr/cookiecutter">Cookiecutter</a> &mdash;
           you probably know it already
@@ -30,6 +43,14 @@
         </li>
       </ul>
     </div>
-    <script type="text/javascript" src="/scripts/index.js"></script>
+
+    {% raw -%}
+    {% if debug -%}
+      <script type="text/javascript" src="scripts/index.js"></script>
+    {% else -%}
+      <script type="text/javascript" src="index.min.js"></script>
+    {% endif %}
+    {%- endraw %}
+    
   </body>
 </html>

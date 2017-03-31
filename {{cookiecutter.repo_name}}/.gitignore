@@ -1,7 +1,8 @@
 dist
+build
 node_modules
 npm-debug.log
 nb_project
 .idea
 .sass-cache
-.gulp-scss-cache 
+.gulp-scss-cache

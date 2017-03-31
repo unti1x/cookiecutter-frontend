@@ -8,6 +8,16 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+.logo {
+  background: url('images/stars-logo.svg?embed') center no-repeat;
+  background-size: contain;
+
+  height: 16em;
+  margin-top: 2em;
+  width: 48em;
+  margin: 2em auto 0;
+}
+
 .yell {
   margin: 5em 10em;
   padding: 1em;
@@ -32,4 +42,27 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+.hidden {
+  display: none;
+}
+
+.expander {
+  &::after {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 0 5px;
+    line-height: 16px;
+    vertical-align: middle;
+
+    content: "";
+    background-image: url('images/down_arrow.png?embed');
+  }
+
+  &.active::after {
+    background-image: url('images/up_arrow.png?embed');
+  }
+
 }

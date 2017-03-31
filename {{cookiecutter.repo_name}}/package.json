@@ -6,7 +6,8 @@
   "main": "dist/scripts/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp build default"
+    "start": "gulper build default",
+    "release": "NODE_ENV=prod node_modules/.bin/gulp build_release"
   },
   "author": "{{cookiecutter.author}}",
   "license": "{{cookiecutter.license}}",
@@ -18,6 +19,15 @@
     "gulp-coffee": "~2.3",
     "gulp-css-inline-images": "~0.1",
     "gulp-{% if cookiecutter.style_engine == "scss" %}sass{% else %}{{cookiecutter.style_engine}}{% endif %}": "latest",
-    "gulp-{{cookiecutter.template_engine}}": "latest"
+    "gulp-{{cookiecutter.template_engine}}": "latest",
+    "gulp-clean-css": "~3.0",
+    "gulp-concat": "~2.6",
+    "gulp-uglify": "~2.1",
+    {% if cookiecutter.template_engine == "twig" -%}
+    "gulp-htmlmin": "~3.0",
+    {%- endif %}
+    "gulp-plumber": "~1.1",
+    "gulper": "~0.1",
+    "rimraf": "~2.6"
   }
 }
