@@ -1,6 +1,6 @@
 gulp = require 'gulp'
 sync = require('browser-sync').create()
-gutil = require 'gulp-util'
+log = require 'fancy-log'
 concat = require 'gulp-concat'
 del = require 'rimraf'
 plumber = require 'gulp-plumber'
@@ -22,7 +22,7 @@ styles_path = 'src/styles/**/*.{{cookiecutter.style_engine}}'
 scripts_path = 'src/scripts/**/*.coffee'
 
 debug = process.env.NODE_ENV isnt 'prod';
-gutil.log('WARN: Building in prod environment') if not debug
+log.warn('Building in prod environment') if not debug
 
 # Redefine gulp.src to keep pipes open on errors
 if debug
@@ -30,7 +30,7 @@ if debug
   gulp.src = (source)->
     gulp._src(source)
       .pipe plumber()
-      .on 'error', gutil.log
+      .on 'error', log.error
 
 # Remove contents of release dir
 gulp.task 'clean_release', (done)-> del 'build', done
