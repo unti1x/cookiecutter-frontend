@@ -2,13 +2,11 @@ gulp = require 'gulp'
 sync = require('browser-sync').create()
 log = require 'fancy-log'
 concat = require 'gulp-concat'
-del = require 'rimraf'
+del = require 'del'
 plumber = require 'gulp-plumber'
 
 templates = require 'gulp-{{cookiecutter.template_engine}}'
-{% if cookiecutter.template_engine == 'twig' -%}
 htmlmin = require 'gulp-htmlmin'
-{%- endif %}
 
 coffee = require 'gulp-coffee'
 uglify = require 'gulp-uglify'
@@ -33,7 +31,7 @@ if debug
       .on 'error', log.error
 
 # Remove contents of release dir
-gulp.task 'clean_release', (done)-> del 'build', done
+gulp.task 'clean_release', -> del 'build'
 
 # Build html templates
 gulp.task 'templates', (cb)->
@@ -57,7 +55,7 @@ gulp.task 'templates', (cb)->
     .pipe gulp.dest('dist')
 
 # Move templates to release path
-gulp.task 'move_templates', ['clean_release', 'templates'], ->
+move_templates = ->
   gulp.src 'dist/**/*.html'
     {% if cookiecutter.template_engine == 'twig' -%}
     .pipe htmlmin
@@ -68,22 +66,29 @@ gulp.task 'move_templates', ['clean_release', 'templates'], ->
     {%- endif %}
     .pipe gulp.dest('build')
 
+gulp.task 'move_templates', gulp.series('clean_release', 'templates', move_templates)
+
 # Build coffee
-gulp.task 'scripts', ->
+build_scripts = ->
   gulp.src scripts_path
     .pipe coffee(bare: yes)
     .pipe gulp.dest('dist/scripts')
     .pipe sync.reload(stream: yes)
 
+gulp.task 'scripts', build_scripts
+
 # Minify and concat scripts
-gulp.task 'min_scripts', ['clean_release', 'scripts'], ->
+min_scripts = ->
   gulp.src 'dist/scripts/**/*.js'
     .pipe uglify()
     .pipe concat('index.min.js')
     .pipe gulp.dest('build')
 
+gulp.task 'min_scripts', gulp.series('clean_release', 'scripts', min_scripts)
+
 # Build styles
-gulp.task 'styles', (cb)->
+
+build_styles = ->
   gulp.src styles_path
     .pipe styles()
     {%- if cookiecutter.style_engine == 'sass' -%}
@@ -93,18 +98,25 @@ gulp.task 'styles', (cb)->
     .pipe gulp.dest('dist/styles')
     .pipe sync.reload(stream: yes)
 
+gulp.task 'styles', build_styles
+
 # Minify and concat styles
-gulp.task 'min_styles', ['clean_release', 'styles'], ->
+min_styles = ->
   gulp.src 'dist/styles/**/*.css'
     .pipe cleancss()
     .pipe concat('index.min.css')
     .pipe gulp.dest('build')
 
+gulp.task 'min_styles', gulp.series('clean_release', 'styles', min_styles)
+
 # Build everything
-gulp.task 'build', ['scripts', 'styles', 'templates']
+gulp.task 'build', gulp.parallel('scripts', 'styles', 'templates')
 
 # TODO: templates
-gulp.task 'build_release', ['clean_release', 'min_styles', 'min_scripts', 'move_templates']
+gulp.task 'build_release', gulp.series(
+  'clean_release',
+  gulp.parallel('min_styles', 'min_scripts', 'move_templates')
+)
 
 # Start development server
 gulp.task 'serve', ->
@@ -118,11 +130,19 @@ gulp.task 'reload', ['templates'], (done)->
   sync.reload()
   done()
 
+gulp.task 'reload', gulp.series('templates', sync.reload)
+
 # Watch for changes and rebuild files if nessesery
-gulp.task 'watch', ->
-  gulp.watch scripts_path, ['scripts']
-  gulp.watch styles_path, ['styles']
-  gulp.watch templates_path, ['reload']
+watch_scripts = ->
+  gulp.watch scripts_path, build_scripts
+
+watch_styles = ->
+  gulp.watch styles_path, build_styles
+
+watch_templates = ->
+  gulp.watch templates_path, gulp.series('templates', sync.reload)
+
+gulp.task 'watch', gulp.parallel(watch_scripts, watch_styles, watch_templates)
 
 # Start dev server and wait for changes
-gulp.task 'default', ['serve', 'watch']
+gulp.task 'default', gulp.parallel('serve', 'watch')
